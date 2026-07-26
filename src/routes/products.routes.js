@@ -5,25 +5,12 @@ const router = express.Router();
 // crud basico despues queda mejorarlo
 router.get("/", ProductController.getAllProducts);
 
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`product with id ${id} found`);
-});
+router.get("/:id", ProductController.getProductById);
 
-router.post("/", (req, res) => {
-  const { name, price, description } = req.body;
-  res.send(`product created`);
-});
+router.post("/", ProductController.createProduct);
 
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, price, description } = req.body;
-  res.send(`product updated`);
-});
+router.put("/:id", ProductController.updateProduct);
 
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`product`);
-});
+router.delete("/:id", ProductController.deleteProduct);
 
 export default router;

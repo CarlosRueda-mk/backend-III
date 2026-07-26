@@ -1,29 +1,16 @@
 import express from "express";
-import userController from "../controllers/user.controller.js";
+import UserController from "../controllers/user.controller.js";
 
 const router = express.Router();
 // crud basico
-router.get("/", userController.getAllUsers);
+router.get("/", UserController.getAllUsers);
 
-router.get("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`user with id ${id} found`);
-});
+router.get("/:id", UserController.getUserById);
 
-router.post("/", (req, res) => {
-  const { name, email, password } = req.body;
-  res.send(`user created : ${name} ${email}`);
-});
+router.post("/", UserController.createUser);
 
-router.put("/:id", (req, res) => {
-  const { id } = req.params;
-  const { name, email, password } = req.body;
-  res.send(`user with id ${id} updated : ${name} ${email} ${password}`);
-});
+router.put("/:id", UserController.updateUser);
 
-router.delete("/:id", (req, res) => {
-  const { id } = req.params;
-  res.send(`user with id ${id} deleted`);
-});
+router.delete("/:id", UserController.deleteUser);
 
 export default router;
