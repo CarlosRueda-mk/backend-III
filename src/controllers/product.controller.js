@@ -1,37 +1,34 @@
 import ProductService from "../services/product.service.js";
 
 class ProductController {
-  static async getAllProducts(req, res) {
+  static async getAllProducts(req, res, next) {
     try {
       const products = await ProductService.getAllProducts();
       res.status(200).json(products);
     } catch (error) {
-      console.error(`Error getting Products: ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 
-  static async createProduct(req, res) {
+  static async createProduct(req, res, next) {
     try {
       const newProduct = await ProductService.createProduct(req.body);
       res.status(201).json(newProduct);
     } catch (error) {
-      console.error(`Error creating Product: ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 
-  static async getProductById(req, res) {
+  static async getProductById(req, res, next) {
     try {
       const product = await ProductService.getProductById(req.params.id);
       res.status(200).json(product);
     } catch (error) {
-      console.error(`Error  finding Product : ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 
-  static async updateProduct(req, res) {
+  static async updateProduct(req, res, next) {
     try {
       const productUpdate = await ProductService.updateProduct(
         req.params.id,
@@ -39,18 +36,16 @@ class ProductController {
       );
       res.status(200).json(productUpdate);
     } catch (error) {
-      console.error(`Error updating product : ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 
-  static async deleteProduct(req, res) {
+  static async deleteProduct(req, res, next) {
     try {
       await ProductService.deleteProduct(req.params.id);
       res.status(200).json(`Product deleted`);
     } catch (error) {
-      console.error(`Error deleting product: ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 }

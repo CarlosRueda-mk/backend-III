@@ -1,4 +1,6 @@
 import UserRepository from "../repositories/user.repository.js";
+import CustomError from "../errors/custom-error.js";
+import ERROR_DICTIONARY from "../errors/error-dictionary.js";
 
 class UserService {
   static async getAllUsers() {
@@ -9,7 +11,7 @@ class UserService {
   static async getUserById(id) {
     const user = await UserRepository.findById(id);
     if (!user) {
-      throw new Error("User not Found");
+      throw new CustomError(ERROR_DICTIONARY.USER_NOT_FOUND);
     }
     return user;
   }
@@ -17,7 +19,7 @@ class UserService {
   static async createUser(user) {
     const existsUser = await UserRepository.findByEmail(user.email);
     if (existsUser) {
-      throw new Error("This email is already used");
+      throw new CustomError(ERROR_DICTIONARY.EMAIL_ALREADY_EXISTS);
     }
     const newUser = await UserRepository.create(user);
     return newUser;
@@ -26,7 +28,7 @@ class UserService {
   static async updateUser(id, user) {
     const existingUser = await UserRepository.findById(id);
     if (!existingUser) {
-      throw new Error("User not Found");
+      throw new CustomError(ERROR_DICTIONARY.USER_NOT_FOUND);
     }
     await UserRepository.update(id, user);
   }
@@ -34,7 +36,7 @@ class UserService {
   static async deleteUser(id) {
     const existingUser = await UserRepository.findById(id);
     if (!existingUser) {
-      throw new Error("User not Found");
+      throw new CustomError(ERROR_DICTIONARY.USER_NOT_FOUND);
     }
 
     await UserRepository.delete(id);

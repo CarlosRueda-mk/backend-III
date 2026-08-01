@@ -1,4 +1,6 @@
 import ProductRepository from "../repositories/product.repository.js";
+import CustomError from "../errors/custom-error.js";
+import ERROR_DICTIONARY from "../errors/error-dictionary.js";
 
 class ProductService {
   static async getAllProducts() {
@@ -13,7 +15,7 @@ class ProductService {
   static async getProductById(id) {
     const product = await ProductRepository.findById(id);
     if (!product) {
-      throw new Error("Product not found");
+      throw new CustomError(ERROR_DICTIONARY.PRODUCT_NOT_FOUND);
     }
 
     return product;
@@ -23,7 +25,7 @@ class ProductService {
     const existingProduct = await ProductRepository.findByCode(product.code);
 
     if (existingProduct) {
-      throw new Error("This product already exists");
+      throw new CustomError(ERROR_DICTIONARY.PRODUCT_ALREADY_EXISTS);
     }
 
     const newProduct = await ProductRepository.create(product);
@@ -34,7 +36,7 @@ class ProductService {
     const existingproduct = await ProductRepository.findById(id);
 
     if (!existingproduct) {
-      throw new Error("Product not found");
+      throw new CustomError(ERROR_DICTIONARY.PRODUCT_NOT_FOUND);
     }
 
     const productUpdate = await ProductRepository.update(id, product);
@@ -45,7 +47,7 @@ class ProductService {
     const existingproduct = await ProductRepository.findById(id);
 
     if (!existingproduct) {
-      throw new Error("Product not found");
+      throw new CustomError(ERROR_DICTIONARY.PRODUCT_NOT_FOUND);
     }
 
     await ProductRepository.delete(id);

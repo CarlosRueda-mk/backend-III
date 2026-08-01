@@ -1,51 +1,46 @@
 import UserService from "../services/user.service.js";
 
 class UserController {
-  static async getAllUsers(req, res) {
+  static async getAllUsers(req, res, next) {
     try {
       const users = await UserService.getAllUsers();
       res.status(200).json(users);
     } catch (error) {
-      console.error(`Error getting Users: ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 
-  static async getUserById(req, res) {
+  static async getUserById(req, res, next) {
     try {
       const user = await UserService.getUserById(req.params.id);
       res.status(200).json(user);
     } catch (error) {
-      console.error(`Error getting user ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
-  static async updateUser(req, res) {
+  static async updateUser(req, res, next) {
     try {
       const userUpdate = await UserService.updateUser(req.params.id, req.body);
       res.status(200).json(userUpdate);
     } catch (error) {
-      console.error(`Error updating user: ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
-  static async createUser(req, res) {
+  static async createUser(req, res, next) {
     try {
       const newUser = await UserService.createUser(req.body);
       res.status(201).json(newUser);
     } catch (error) {
-      console.error(`Error creating new user: ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 
-  static async deleteUser(req, res) {
+  static async deleteUser(req, res, next) {
     try {
       await UserService.deleteUser(req.params.id);
       res.status(200).json("User deleted");
     } catch (error) {
-      console.error(`Error deleting user: ${error.message}`);
-      res.status(500).json({ message: error.message });
+      next(error);
     }
   }
 }
