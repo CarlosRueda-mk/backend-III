@@ -44,7 +44,7 @@ Además, se incorporaron funcionalidades de:
 
 El proyecto utiliza una arquitectura por capas:
 
-```text
+````text
 Cliente
    │
    ▼
@@ -571,6 +571,65 @@ test/
 ├── order.test.js
 ├── swagger.test.js
 └── user.test.js
+
+## Carga de archivos
+
+La API incorpora Multer para permitir la carga de documentos y comprobantes mediante `multipart/form-data`.
+
+### Documentos de usuario
+
+POST `/api/users/:id/documents`
+
+Permite asociar un documento a un usuario existente.
+
+Campos:
+
+- `document`: archivo PDF, JPG, JPEG o PNG.
+- `documentType`: tipo de documento permitido.
+
+Ejemplo:
+
+```text
+document: archivo.pdf
+documentType: driver_license
+Comprobantes de pedidos
+
+POST /api/orders/:id/receipt
+
+Permite asociar un comprobante a un pedido existente.
+
+Campo:
+
+receipt: archivo PDF, JPG, JPEG o PNG.
+Restricciones
+Tamaño máximo: 5 MB.
+Tipos permitidos: PDF, JPEG y PNG.
+Los archivos se almacenan en uploads/.
+La carpeta uploads/ está incluida en .gitignore.
+MongoDB almacena únicamente los metadatos del archivo.
+Metadatos almacenados
+Nombre original.
+Nombre generado.
+Ruta.
+MIME type.
+Tamaño.
+Tipo de documento, cuando corresponde.
+Fecha de carga.
+
+## Testing
+
+El proyecto cuenta con tests funcionales utilizando Mocha, Chai y Supertest.
+
+Se validan:
+
+- Carga correcta de documentos.
+- Carga correcta de comprobantes.
+- Archivo faltante.
+- Tipo de documento inválido.
+- Tipo de archivo inválido.
+- Entidad inexistente.
+- Límite de tamaño.
+
 Autor
 
 Carlos Rueda
@@ -590,4 +649,4 @@ Swagger
 Mocha
 Chai
 Supertest
-```
+````

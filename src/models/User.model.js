@@ -6,6 +6,17 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, select: false },
   role: { type: String, default: USER_ROLES.USER },
+  documents: [
+    {
+      originalName: String,
+      fileName: String,
+      path: String,
+      mimetype: String,
+      size: Number,
+      documentType: String,
+      uploadedAt: Date,
+    },
+  ],
 });
 
 const UserModel = mongoose.model("User", userSchema);

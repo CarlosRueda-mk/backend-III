@@ -146,3 +146,95 @@ paths:
         $ref: "#/components/responses/NotFoundResponse"
       "500":
         $ref: "#/components/responses/InternalServerErrorResponse"
+/api/users/{id}/documents:
+  post:
+    tags:
+      - Users
+    summary: Upload a user document
+    description: Uploads a document and associates it with an existing user.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: User ID
+        schema:
+          type: string
+        example: 6a94e4245b5292408d7afff3
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - document
+              - documentType
+            properties:
+              document:
+                type: string
+                format: binary
+                description: Document file to upload.
+              documentType:
+                type: string
+                description: Type of document.
+                enum:
+                  - driver_license
+                example: driver_license
+    responses:
+      "200":
+        description: Document uploaded successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      "400":
+        $ref: "#/components/responses/ValidationErrorResponse"
+      "404":
+        $ref: "#/components/responses/NotFoundResponse"
+      "500":
+        $ref: "#/components/responses/InternalServerErrorResponse"
+/api/orders/{id}/receipt:
+  post:
+    tags:
+      - Orders
+    summary: Upload an order receipt
+    description: Uploads a receipt and associates it with an existing order.
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: Order ID
+        schema:
+          type: string
+        example: 6a9637881b6dcd44829f5b3a
+
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - receipt
+            properties:
+              receipt:
+                type: string
+                format: binary
+                description: Receipt file to upload.
+
+    responses:
+      "200":
+        description: Receipt uploaded successfully
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Order"
+
+      "400":
+        $ref: "#/components/responses/ValidationErrorResponse"
+
+      "404":
+        $ref: "#/components/responses/NotFoundResponse"
+
+      "500":
+        $ref: "#/components/responses/InternalServerErrorResponse"

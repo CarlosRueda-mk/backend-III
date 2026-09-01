@@ -27,6 +27,15 @@ const orderSchema = new mongoose.Schema({
     enum: Object.values(ORDER_STATUS),
     default: ORDER_STATUS.PENDING,
   },
+
+  receipt: {
+    originalName: String,
+    fileName: String,
+    path: String,
+    mimetype: String,
+    size: Number,
+    uploadedAt: Date,
+  },
 });
 
 const OrderModel = mongoose.model("Order", orderSchema);

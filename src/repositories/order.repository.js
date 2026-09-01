@@ -23,6 +23,14 @@ class OrderRepository {
   static async deleteOrder(id) {
     return await OrderModel.findOneAndDelete({ _id: id });
   }
+
+  static async addReceipt(id, receipt) {
+    return await OrderModel.findOneAndUpdate(
+      { _id: id },
+      { $set: { receipt } },
+      { new: true },
+    );
+  }
 }
 
 export default OrderRepository;

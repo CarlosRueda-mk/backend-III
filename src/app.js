@@ -11,6 +11,7 @@ import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "./config/swagger.js";
 import CustomError from "./errors/custom-error.js";
 import ERROR_DICTIONARY from "./errors/error-dictionary.js";
+import uploadErrorMiddleware from "./middlewares/upload-error.middleware.js";
 
 const app = express();
 
@@ -40,6 +41,8 @@ app.use((req, res, next) => {
   const error = new CustomError(ERROR_DICTIONARY.ROUTE_NOT_FOUND);
   next(error);
 });
+
+app.use(uploadErrorMiddleware);
 
 app.use(errorMiddleware);
 

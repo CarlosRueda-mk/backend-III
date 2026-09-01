@@ -54,6 +54,36 @@ const ERROR_DICTIONARY = Object.freeze({
     status: 500,
     message: "Internal server error",
   },
+
+  FILE_REQUIRED: {
+    code: ERROR_CODES.VALIDATION_ERROR,
+    status: 400,
+    message: "File is required",
+  },
+
+  INVALID_FILE_TYPE: {
+    code: ERROR_CODES.VALIDATION_ERROR,
+    status: 400,
+    message: "Invalid file type",
+  },
+
+  FILE_TOO_LARGE: {
+    code: ERROR_CODES.VALIDATION_ERROR,
+    status: 400,
+    message: "File size exceeds the maximum allowed",
+  },
+
+  INVALID_DOCUMENT_TYPE: {
+    code: ERROR_CODES.VALIDATION_ERROR,
+    status: 400,
+    message: "Invalid document type",
+  },
+
+  FILE_SAVE_ERROR: {
+    code: ERROR_CODES.INTERNAL_SERVER_ERROR,
+    status: 500,
+    message: "Error saving file",
+  },
 });
 
 export default ERROR_DICTIONARY;

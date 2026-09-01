@@ -24,6 +24,14 @@ class UserRepository {
   static async delete(id) {
     return await UserModel.findByIdAndDelete(id);
   }
+
+  static async addDocument(id, document) {
+    return await UserModel.findOneAndUpdate(
+      { _id: id },
+      { $push: { documents: document } },
+      { new: true },
+    );
+  }
 }
 
 export default UserRepository;

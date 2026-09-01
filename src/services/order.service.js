@@ -40,6 +40,35 @@ class OrderService {
     }
     return await OrderRepository.deleteOrder(id);
   }
+
+  static async addReceipt(id, file) {
+    const existingOrder = await OrderRepository.getOrderById(id);
+
+    if (!existingOrder) {
+      throw new CustomError(ERROR_DICTIONARY.ORDER_NOT_FOUND);
+    }
+
+    if (!file) {
+      throw new CustomError(ERROR_DICTIONARY.FILE_REQUIRED);
+    }
+
+    const receipt = {
+      originalName: file.originalname,
+      fileName: file.filename,
+      path: file.path,
+      mimetype: file.mimetype,
+      size: file.size,
+      uploadedAt: new Date(),
+    };
+
+    const updatedOrder = await OrderRepository.addReceipt(id, receipt);
+
+    if (!updatedOrder) {
+      throw new CustomError(ERROR_DICTIONARY.ORDER_NOT_FOUND);
+    }
+    logger.info(`Receipt uploaded successfully for order: ${id}`);
+    return updatedOrder;
+  }
 }
 
 export default OrderService;

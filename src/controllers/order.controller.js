@@ -48,6 +48,19 @@ class OrderController {
       next(error);
     }
   }
+
+  static async addReceipt(req, res, next) {
+    try {
+      const updatedOrder = await OrderService.addReceipt(
+        req.params.id,
+        req.file,
+      );
+
+      res.status(200).json(updatedOrder);
+    } catch (error) {
+      next(error);
+    }
+  }
 }
 
 export default OrderController;
