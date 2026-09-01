@@ -1,0 +1,41 @@
+components:
+  schemas:
+    OrderItem:
+      type: object
+      properties:
+        product:
+          type: string
+          description: Product ID
+          example: 64f1a2b3c4d5e6f789012345
+        quantity:
+          type: integer
+          description: Quantity of the product
+          minimum: 1
+          example: 2
+      required:
+        - product
+        - quantity
+
+    Order:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Order ID
+          example: 64f1a2b3c4d5e6f789012345
+        user:
+          type: string
+          description: ID of the user who created the order
+          example: 64f1a2b3c4d5e6f789012346
+        products:
+          type: array
+          description: Products included in the order
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        status:
+          type: string
+          description: Current status of the order
+          example: pending
+      required:
+        - user
+        - products

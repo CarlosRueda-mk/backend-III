@@ -25,6 +25,12 @@ const ERROR_DICTIONARY = Object.freeze({
     message: "Delivery not found",
   },
 
+  ROUTE_NOT_FOUND: {
+    code: ERROR_CODES.NOT_FOUND,
+    status: 404,
+    message: "Route not found",
+  },
+
   EMAIL_ALREADY_EXISTS: {
     code: ERROR_CODES.DUPLICATE_RESOURCE,
     status: 409,

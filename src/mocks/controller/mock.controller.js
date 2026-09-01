@@ -34,7 +34,7 @@ class MockController {
   static async getMockDeliveries(req, res, next) {
     try {
       const { quantity } = req.query;
-      const deliveries = await MockService.generateDelivery(quantity);
+      const deliveries = await MockService.generateDeliveries(quantity);
       res.status(200).json(deliveries);
     } catch (error) {
       next(error);

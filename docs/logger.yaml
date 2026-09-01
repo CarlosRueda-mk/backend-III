@@ -1,0 +1,12 @@
+paths:
+  /api/logger/test:
+    get:
+      tags:
+        - Logger
+      summary: Test logger
+      description: Tests the logging system.
+      responses:
+        "200":
+          description: Logger test executed successfully
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"

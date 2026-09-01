@@ -1,0 +1,22 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: User ID
+          example: 64f1a2b3c4d5e6f789012345
+        name:
+          type: string
+          description: User name
+          example: Carlos Rueda
+        email:
+          type: string
+          format: email
+          description: User email
+          example: carlos@example.com
+        role:
+          type: string
+          description: User role
+          example: user

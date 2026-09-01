@@ -24,6 +24,7 @@ const orderSchema = new mongoose.Schema({
   ],
   status: {
     type: String,
+    enum: Object.values(ORDER_STATUS),
     default: ORDER_STATUS.PENDING,
   },
 });

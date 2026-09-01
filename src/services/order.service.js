@@ -1,10 +1,12 @@
 import OrderRepository from "../repositories/order.repository.js";
 import CustomError from "../errors/custom-error.js";
 import ERROR_DICTIONARY from "../errors/error-dictionary.js";
+import logger from "../config/logger.js";
 
 class OrderService {
   static async getAllOrders() {
     const orders = await OrderRepository.getOrders();
+    logger.info(`Retrieving all orders. Total: ${orders.length}`);
     return orders;
   }
 
@@ -18,6 +20,7 @@ class OrderService {
 
   static async createOrder(order) {
     const newOrder = await OrderRepository.createOrder(order);
+    logger.info(`Order created successfully: ${newOrder._id}`);
     return newOrder;
   }
 

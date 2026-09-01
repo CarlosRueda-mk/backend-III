@@ -1,0 +1,141 @@
+paths:
+  /api/orders:
+    get:
+      tags:
+        - Orders
+      summary: Get all orders
+      description: Returns all registered orders.
+      responses:
+        "200":
+          $ref: "#/components/responses/OrdersListResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+    post:
+      tags:
+        - Orders
+      summary: Create a new order
+      description: Creates a new order in the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user
+                - products
+              properties:
+                user:
+                  type: string
+                  description: ID of the user creating the order
+                  example: 64f1a2b3c4d5e6f789012346
+                products:
+                  type: array
+                  description: Products included in the order
+                  items:
+                    $ref: "#/components/schemas/OrderItem"
+                status:
+                  type: string
+                  example: pending
+      responses:
+        "201":
+          $ref: "#/components/responses/OrderCreatedResponse"
+        "400":
+          $ref: "#/components/responses/BadRequestResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+  /api/orders/{id}:
+    get:
+      tags:
+        - Orders
+      summary: Get order by ID
+      description: Returns an order by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Order ID
+          schema:
+            type: string
+          example: 6a6d25299ea235bc815a4b68
+      responses:
+        "200":
+          description: Order found successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+    put:
+      tags:
+        - Orders
+      summary: Update an order
+      description: Updates an existing order by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Order ID
+          schema:
+            type: string
+          example: 6a6d25299ea235bc815a4b68
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  description: ID of the user associated with the order
+                  example: 64f1a2b3c4d5e6f789012346
+                products:
+                  type: array
+                  description: Products included in the order
+                  items:
+                    $ref: "#/components/schemas/OrderItem"
+                status:
+                  type: string
+                  example: pending
+      responses:
+        "200":
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+    delete:
+      tags:
+        - Orders
+      summary: Delete an order
+      description: Deletes an existing order by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Order ID
+          schema:
+            type: string
+          example: 6a6d25299ea235bc815a4b68
+      responses:
+        "200":
+          description: Order deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Order deleted
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"

@@ -1,0 +1,28 @@
+components:
+  schemas:
+    Delivery:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Delivery ID
+          example: 64f1a2b3c4d5e6f789012345
+        order:
+          type: string
+          description: ID of the order associated with the delivery
+          example: 64f1a2b3c4d5e6f789012346
+        deliveryMan:
+          type: string
+          description: ID of the user assigned as delivery man
+          example: 64f1a2b3c4d5e6f789012347
+        priority:
+          type: string
+          description: Priority of the delivery
+          example: medium
+        status:
+          type: string
+          description: Current status of the delivery
+          example: pending
+      required:
+        - order
+        - deliveryMan

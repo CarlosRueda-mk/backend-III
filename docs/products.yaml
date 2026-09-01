@@ -1,0 +1,169 @@
+paths:
+  /api/products:
+    get:
+      tags:
+        - Products
+      summary: Get all products
+      description: Returns all registered products.
+      responses:
+        "200":
+          $ref: "#/components/responses/ProductsListResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      description: Creates a new product in the system.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - description
+                - code
+                - stock
+                - price
+              properties:
+                name:
+                  type: string
+                  example: Notebook Lenovo
+                description:
+                  type: string
+                  example: Notebook para uso profesional
+                code:
+                  type: string
+                  example: ABC12345
+                stock:
+                  type: integer
+                  minimum: 0
+                  maximum: 1000
+                  example: 50
+                price:
+                  type: number
+                  example: 150000
+                status:
+                  type: string
+                  example: active
+                thumbnail:
+                  type: string
+                  example: https://example.com/product.jpg
+      responses:
+        "201":
+          $ref: "#/components/responses/ProductCreatedResponse"
+        "409":
+          $ref: "#/components/responses/ConflictResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+  /api/products/{id}:
+    get:
+      tags:
+        - Products
+      summary: Get product by ID
+      description: Returns a product by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Product ID
+          schema:
+            type: string
+          example: 6a6d25299ea235bc815a4b5e
+      responses:
+        "200":
+          description: Product found successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+
+    put:
+      tags:
+        - Products
+      summary: Update a product
+      description: Updates an existing product by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Product ID
+          schema:
+            type: string
+          example: 6a6d25299ea235bc815a4b5e
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Notebook Lenovo
+                description:
+                  type: string
+                  example: Notebook para uso profesional
+                code:
+                  type: string
+                  example: ABC12345
+                stock:
+                  type: integer
+                  minimum: 0
+                  maximum: 1000
+                  example: 50
+                price:
+                  type: number
+                  example: 150000
+                status:
+                  type: string
+                  example: active
+                thumbnail:
+                  type: string
+                  example: https://example.com/product.jpg
+      responses:
+        "200":
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "409":
+          $ref: "#/components/responses/ConflictResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+
+    delete:
+      tags:
+        - Products
+      summary: Delete a product
+      description: Deletes an existing product by its ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Product ID
+          schema:
+            type: string
+          example: 6a6d25299ea235bc815a4b5e
+      responses:
+        "200":
+          description: Product deleted successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: Product deleted
+        "404":
+          $ref: "#/components/responses/NotFoundResponse"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"

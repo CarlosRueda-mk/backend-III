@@ -1,0 +1,30 @@
+components:
+  schemas:
+    MockPopulateRequest:
+      type: object
+      required:
+        - users
+        - products
+        - orders
+        - deliveries
+      properties:
+        users:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 10
+        products:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 10
+        orders:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 10
+        deliveries:
+          type: integer
+          minimum: 1
+          maximum: 100
+          example: 10

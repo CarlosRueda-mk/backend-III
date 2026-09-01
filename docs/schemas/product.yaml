@@ -1,0 +1,39 @@
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Product ID
+          example: 64f1a2b3c4d5e6f789012345
+        name:
+          type: string
+          description: Product name
+          example: Notebook Lenovo
+        description:
+          type: string
+          description: Product description
+          example: Notebook para uso profesional
+        code:
+          type: string
+          description: Unique code of the product
+          example: ABC12345
+        stock:
+          type: integer
+          description: Quantity available of the product
+          minimum: 0
+          maximum: 1000
+          example: 50
+        price:
+          type: number
+          description: Price of the product
+          example: 150000
+        status:
+          type: string
+          description: Status of the product
+          example: active
+        thumbnail:
+          type: string
+          description: URL of the image
+          example: https://example.com/product.jpg

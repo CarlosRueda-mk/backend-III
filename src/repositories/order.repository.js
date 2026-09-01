@@ -14,7 +14,10 @@ class OrderRepository {
   }
 
   static async updateOrder(id, order) {
-    return await OrderModel.findOneAndUpdate({ _id: id }, order);
+    return await OrderModel.findOneAndUpdate({ _id: id }, order, {
+      new: true,
+      runValidators: true,
+    });
   }
 
   static async deleteOrder(id) {

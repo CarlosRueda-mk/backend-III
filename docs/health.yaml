@@ -1,0 +1,10 @@
+paths:
+  /:
+    get:
+      tags:
+        - Health
+      summary: Check API health
+      description: Returns the current status of the API.
+      responses:
+        "200":
+          $ref: "#/components/responses/HealthResponse"

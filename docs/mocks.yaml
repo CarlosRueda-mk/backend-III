@@ -1,0 +1,138 @@
+paths:
+  /api/mocks/users:
+    get:
+      tags:
+        - Mocks
+      summary: Generate mock users
+      description: Generates fake users using Faker.
+      parameters:
+        - name: quantity
+          in: query
+          required: false
+          description: Number of users to generate
+          schema:
+            type: integer
+            minimum: 1
+            example: 10
+      responses:
+        "200":
+          description: Mock users generated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+  /api/mocks/orders:
+    get:
+      tags:
+        - Mocks
+      summary: Generate mock orders
+      description: Generates fake orders using Faker.
+      parameters:
+        - name: quantity
+          in: query
+          required: false
+          description: Number of orders to generate
+          schema:
+            type: integer
+            minimum: 1
+            example: 10
+      responses:
+        "200":
+          description: Mock orders generated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+  /api/mocks/products:
+    get:
+      tags:
+        - Mocks
+      summary: Generate mock products
+      description: Generates fake products using Faker.
+      parameters:
+        - name: quantity
+          in: query
+          required: false
+          description: Number of products to generate
+          schema:
+            type: integer
+            minimum: 1
+            example: 10
+      responses:
+        "200":
+          description: Mock products generated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+  /api/mocks/deliveries:
+    get:
+      tags:
+        - Mocks
+      summary: Generate mock deliveries
+      description: Generates fake deliveries using Faker.
+      parameters:
+        - name: quantity
+          in: query
+          required: false
+          description: Number of deliveries to generate
+          schema:
+            type: integer
+            minimum: 1
+            example: 10
+      responses:
+        "200":
+          description: Mock deliveries generated successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Delivery"
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"
+  /api/mocks/populate:
+    post:
+      tags:
+        - Mocks
+      summary: Populate database with mock data
+      description: Generates and inserts mock data into the database.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Configuration for the mock data to be inserted.
+              example:
+                users: 10
+                products: 10
+                orders: 10
+                deliveries: 10
+      responses:
+        "200":
+          description: Mock data inserted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Mock data inserted successfully
+                  data:
+                    type: object
+        "500":
+          $ref: "#/components/responses/InternalServerErrorResponse"

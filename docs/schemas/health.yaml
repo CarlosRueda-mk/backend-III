@@ -1,0 +1,15 @@
+components:
+  schemas:
+    Health:
+      type: object
+      properties:
+        service:
+          type: string
+          example: ShipNow API
+        environment:
+          type: string
+          example: development
+        uptime:
+          type: number
+          description: Time in seconds since the server started
+          example: 125.42
