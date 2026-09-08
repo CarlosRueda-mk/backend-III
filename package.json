@@ -8,6 +8,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
     "test": "node --env-file=.env.test ./node_modules/mocha/bin/mocha.js"
   },
   "dependencies": {

@@ -1,8 +1,12 @@
 import UserModel from "../models/User.model.js";
 
 class UserRepository {
-  static async find() {
-    return await UserModel.find();
+  static async find(skip = 0, limit = 10) {
+    return await UserModel.find().skip(skip).limit(limit);
+  }
+
+  static async count() {
+    return await UserModel.countDocuments();
   }
 
   static async findById(id) {

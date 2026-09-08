@@ -1,10 +1,13 @@
 import DeliveryModel from "../models/Delivery.model.js";
 
 class DeliveryRepository {
-  static async getDeliveries() {
-    return await DeliveryModel.find();
+  static async getDeliveries(skip = 0, limit = 10) {
+    return await DeliveryModel.find().skip(skip).limit(limit);
   }
 
+  static async count() {
+    return await DeliveryModel.countDocuments();
+  }
   static async getDeliveryById(id) {
     return await DeliveryModel.findOne({ _id: id });
   }

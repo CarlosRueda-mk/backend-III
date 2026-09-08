@@ -27,12 +27,21 @@ describe("Users API", () => {
     const response = await request(app).get("/api/users");
 
     expect(response.status).to.equal(200);
-    expect(response.body).to.be.an("array");
 
-    expect(response.body[0]).to.have.property("_id");
-    expect(response.body[0]).to.have.property("name");
-    expect(response.body[0]).to.have.property("email");
-    expect(response.body[0]).to.have.property("role");
+    expect(response.body).to.be.an("object");
+    expect(response.body).to.have.property("users");
+    expect(response.body.users).to.be.an("array");
+
+    expect(response.body).to.have.property("pagination");
+    expect(response.body.pagination).to.have.property("page");
+    expect(response.body.pagination).to.have.property("limit");
+    expect(response.body.pagination).to.have.property("total");
+    expect(response.body.pagination).to.have.property("totalPages");
+
+    expect(response.body.users[0]).to.have.property("_id");
+    expect(response.body.users[0]).to.have.property("name");
+    expect(response.body.users[0]).to.have.property("email");
+    expect(response.body.users[0]).to.have.property("role");
   });
 
   it("should not create a user with an existing email", async () => {

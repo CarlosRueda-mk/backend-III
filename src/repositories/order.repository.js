@@ -1,8 +1,12 @@
 import OrderModel from "../models/Order.model.js";
 
 class OrderRepository {
-  static async getOrders() {
-    return await OrderModel.find();
+  static async getOrders(skip = 0, limit = 10) {
+    return await OrderModel.find().skip(skip).limit(limit);
+  }
+
+  static async count() {
+    return await OrderModel.countDocuments();
   }
 
   static async getOrderById(id) {

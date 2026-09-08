@@ -629,6 +629,117 @@ Se validan:
 - Tipo de archivo inválido.
 - Entidad inexistente.
 - Límite de tamaño.
+## Performance y escalabilidad
+
+La API implementa paginación en los endpoints de listado de usuarios, órdenes y entregas.
+
+Los endpoints aceptan los parámetros:
+
+- `page`: número de página.
+- `limit`: cantidad de registros por página.
+
+Ejemplo:
+
+`GET /api/users?page=1&limit=10`
+
+El límite máximo de registros por página es 100.
+
+Las consultas utilizan `skip()` y `limit()` para evitar recuperar colecciones completas. Además, se utiliza `countDocuments()` para obtener la cantidad total de registros y calcular las páginas disponibles.
+
+## Configuración por entorno
+
+La aplicación utiliza variables de entorno para evitar almacenar información sensible en el código fuente.
+
+Variables requeridas:
+
+- `PORT`
+- `MONGODB_URI`
+- `NODE_ENV`
+- `LOG_LEVEL`
+
+Si una variable requerida no está definida, la aplicación informa el problema y detiene su ejecución.
+
+Consultar `.env.example` para conocer las variables necesarias.
+
+## Health Check
+
+La API dispone de un endpoint para comprobar su estado:
+
+`GET /health`
+
+La respuesta incluye:
+
+- Estado de la API.
+- Entorno de ejecución.
+- Tiempo de actividad.
+- Timestamp.
+
+No expone información sensible.
+
+## Archivos y uploads
+
+Los archivos subidos mediante Multer:
+
+- Tienen un límite máximo de 5 MB.
+- Permiten únicamente PDF, JPG y PNG.
+- Utilizan errores centralizados.
+- La carpeta `uploads/` no se incluye en el repositorio.
+
+Los archivos generados durante la ejecución se excluyen mediante `.gitignore` y `.dockerignore`.
+
+## Producción
+
+Los endpoints internos de mocks y pruebas del logger no se habilitan cuando:
+
+`NODE_ENV=production`
+
+Swagger permanece disponible para consultar la documentación de la API.
+
+## Testing
+
+Los tests funcionales se ejecutan mediante:
+
+```bash
+npm test
+
+Se utilizan Mocha, Chai y Supertest.
+
+Docker
+Construir la imagen
+docker build -t shipnow-api .
+Ejecutar el contenedor
+docker run --rm -p 3000:3000 \
+  -e PORT=3000 \
+  -e NODE_ENV=production \
+  -e LOG_LEVEL=info \
+  -e MONGODB_URI="TU_MONGODB_URI" \
+  shipnow-api
+
+La API queda disponible en:
+
+http://localhost:3000
+
+Health Check:
+
+http://localhost:3000/health
+
+Swagger:
+
+http://localhost:3000/api/docs/
+
+Las variables de entorno se proporcionan externamente al contenedor y no se almacenan dentro de la imagen.
+
+El archivo .dockerignore evita incluir:
+
+node_modules
+.env
+.env.test
+.git
+logs
+uploads
+coverage
+archivos temporales
+
 
 Autor
 

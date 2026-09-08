@@ -23,13 +23,24 @@ app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/deliveries", deliveryRoutes);
-app.use("/api/logger", loggerRoutes);
+if (config.NODE_ENV !== "production") {
+  app.use("/api/logger", loggerRoutes);
+}
 
 app.get("/", (req, res) => {
   res.status(200).json({
     service: "ShipNow API",
     environment: config.NODE_ENV,
     uptime: process.uptime(),
+  });
+});
+
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    environment: config.NODE_ENV,
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
   });
 });
 

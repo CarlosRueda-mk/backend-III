@@ -3,8 +3,11 @@ import UserService from "../services/user.service.js";
 class UserController {
   static async getAllUsers(req, res, next) {
     try {
-      const users = await UserService.getAllUsers();
-      res.status(200).json(users);
+      const { page = 1, limit = 10 } = req.query;
+
+      const result = await UserService.getAllUsers(page, limit);
+
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }

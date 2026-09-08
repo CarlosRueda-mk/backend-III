@@ -4,10 +4,38 @@ import ERROR_DICTIONARY from "../errors/error-dictionary.js";
 import logger from "../config/logger.js";
 
 class OrderService {
-  static async getAllOrders() {
-    const orders = await OrderRepository.getOrders();
-    logger.info(`Retrieving all orders. Total: ${orders.length}`);
-    return orders;
+  static async getOrders(page = 1, limit = 10) {
+    page = Number(page);
+    limit = Number(limit);
+
+    if (!Number.isInteger(page) || page < 1) {
+      page = 1;
+    }
+
+    if (!Number.isInteger(limit) || limit < 1) {
+      limit = 10;
+    }
+
+    if (limit > 100) {
+      limit = 100;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const [orders, total] = await Promise.all([
+      OrderRepository.getOrders(skip, limit),
+      OrderRepository.count(),
+    ]);
+
+    return {
+      orders,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   static async getOrderById(id) {

@@ -5,9 +5,41 @@ import { DOCUMENT_TYPES } from "../constants/index.js";
 import logger from "../config/logger.js";
 
 class UserService {
-  static async getAllUsers() {
-    const users = await UserRepository.find();
-    return users;
+  static async getAllUsers(page = 1, limit = 10) {
+    page = Number(page);
+    limit = Number(limit);
+
+    if (!Number.isInteger(page) || page < 1) {
+      page = 1;
+    }
+
+    if (!Number.isInteger(limit) || limit < 1) {
+      limit = 10;
+    }
+
+    if (limit > 100) {
+      limit = 100;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const [users, total] = await Promise.all([
+      UserRepository.find(skip, limit),
+      UserRepository.count(),
+    ]);
+
+    console.log("USERS:", users);
+    console.log("TOTAL:", total);
+
+    return {
+      users,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   static async getUserById(id) {

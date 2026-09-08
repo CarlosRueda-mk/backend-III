@@ -1,10 +1,13 @@
 import OrderService from "../services/order.service.js";
 
 class OrderController {
-  static async getAllOrders(req, res, next) {
+  static async getOrders(req, res, next) {
     try {
-      const orders = await OrderService.getAllOrders();
-      res.status(200).json({ orders });
+      const { page = 1, limit = 10 } = req.query;
+
+      const result = await OrderService.getOrders(page, limit);
+
+      res.status(200).json(result);
     } catch (error) {
       next(error);
     }
