@@ -4,7 +4,14 @@ import DailyRotateFile from "winston-daily-rotate-file";
 import { config } from "./index.js";
 
 const customLevels = {
-  levels: { fatal: 0, error: 1, warning: 2, info: 3, http: 4, debug: 5 },
+  levels: {
+    fatal: 0,
+    error: 1,
+    warning: 2,
+    info: 3,
+    http: 4,
+    debug: 5,
+  },
 
   colors: {
     fatal: "red bold",
@@ -33,29 +40,35 @@ const consoleFormat = winston.format.combine(
   }),
 );
 
-const logger = winston.createLogger({
-  levels: customLevels.levels,
-  transports: [
+const transports = [
+  new DailyRotateFile({
+    filename: "logs/combined-%DATE%.log",
+    datePattern: "YYYY-MM-DD",
+    maxFiles: "7d",
+    level: config.NODE_ENV === "production" ? "info" : "debug",
+    format: fileFormat,
+  }),
+
+  new DailyRotateFile({
+    filename: "logs/error-%DATE%.log",
+    datePattern: "YYYY-MM-DD",
+    maxFiles: "7d",
+    level: "error",
+    format: fileFormat,
+  }),
+];
+
+if (config.NODE_ENV === "development") {
+  transports.push(
     new winston.transports.Console({
       format: consoleFormat,
     }),
+  );
+}
 
-    new DailyRotateFile({
-      filename: "logs/app-%DATE%.log",
-      datePattern: "YYYY-MM-DD",
-      maxFiles: "7d",
-      level: config.NODE_ENV === "production" ? "info" : "debug",
-      format: fileFormat,
-    }),
-
-    new DailyRotateFile({
-      filename: "logs/error-%DATE%.log",
-      datePattern: "YYYY-MM-DD",
-      level: "error",
-      maxFiles: "7d",
-      format: fileFormat,
-    }),
-  ],
+const logger = winston.createLogger({
+  levels: customLevels.levels,
+  transports,
 });
 
 export default logger;

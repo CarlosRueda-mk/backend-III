@@ -16,6 +16,17 @@ components:
               message:
                 type: string
                 example: Invalid request data
+    ValidationErrorResponse:
+  description: Validation error response
+  content:
+    application/json:
+      schema:
+        $ref: "#/components/schemas/ErrorResponse"
+      example:
+        success: false
+        error:
+          code: VALIDATION_ERROR
+          message: Invalid data
 
     UsersListResponse:
       description: List of users
